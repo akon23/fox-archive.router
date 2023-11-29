@@ -10,11 +10,13 @@ abstract class _RouterDebugViewControllerBase {
   Stream<Message> get _stream;
 
   /// Добавить топик
-  void _addMessage(String topic, [String? message]) => _sink.add(Message(topic, message));
+  void _addMessage(String topic, [String? message]) =>
+      _sink.add(Message(topic, message));
 
   /// Подписаться на топик
-  Stream<String> _onTopic(String topic) =>
-      _stream.where((msg) => msg.topic == topic).map<String>((msg) => '${msg.topic}(${msg.message ?? ''})');
+  Stream<String> _onTopic(String topic) => _stream
+      .where((msg) => msg.topic == topic)
+      .map<String>((msg) => '${msg.topic}(${msg.message ?? ''})');
 }
 
 @immutable
@@ -31,12 +33,17 @@ class RouterDebugViewController extends _RouterDebugViewControllerBase
         _DebugRouteInformationParser,
         _DebugRouterDelegate {
   // ignore: prefer_constructors_over_static_methods
-  static RouterDebugViewController get instance => _instance ??= RouterDebugViewController._();
+  static RouterDebugViewController get instance =>
+      _instance ??= RouterDebugViewController._();
   static RouterDebugViewController? _instance;
   RouterDebugViewController._()
       : _sink = StreamController<Message>.broadcast(),
         _controller = StreamController<Message>.broadcast() {
-    _sink.stream.transform<Message>(const _IntervalStreamTransformer(Duration(milliseconds: 250))).pipe(_controller);
+    _sink.stream
+        .transform<Message>(
+          const _IntervalStreamTransformer(Duration(milliseconds: 250)),
+        )
+        .pipe(_controller);
   }
 
   @override
@@ -56,10 +63,14 @@ mixin _DebugBackButtonDispatcher on _RouterDebugViewControllerBase {
 
 /// RouteInformationProvider
 mixin _DebugRouteInformationProvider on _RouterDebugViewControllerBase {
-  void routerReportsNewRouteInformation(String message) => _addMessage('routerReportsNewRouteInformation', message);
-  Stream<String> get onRouterReportsNewRouteInformation => _onTopic('routerReportsNewRouteInformation');
-  void didPushRouteInformation(String message) => _addMessage('didPushRouteInformation', message);
-  Stream<String> get onDidPushRouteInformation => _onTopic('didPushRouteInformation');
+  void routerReportsNewRouteInformation(String message) =>
+      _addMessage('routerReportsNewRouteInformation', message);
+  Stream<String> get onRouterReportsNewRouteInformation =>
+      _onTopic('routerReportsNewRouteInformation');
+  void didPushRouteInformation(String message) =>
+      _addMessage('didPushRouteInformation', message);
+  Stream<String> get onDidPushRouteInformation =>
+      _onTopic('didPushRouteInformation');
   void didPushRoute(String message) => _addMessage('didPushRoute', message);
   Stream<String> get onDidPushRoute => _onTopic('didPushRoute');
   void didPopRoute() => _addMessage('didPopRoute');
@@ -68,19 +79,26 @@ mixin _DebugRouteInformationProvider on _RouterDebugViewControllerBase {
 
 /// RouteInformationParser
 mixin _DebugRouteInformationParser on _RouterDebugViewControllerBase {
-  void restoreRouteInformation(String message) => _addMessage('restoreRouteInformation', message);
-  Stream<String> get onRestoreRouteInformation => _onTopic('restoreRouteInformation');
-  void parseRouteInformation(String message) => _addMessage('parseRouteInformation', message);
-  Stream<String> get onParseRouteInformation => _onTopic('parseRouteInformation');
+  void restoreRouteInformation(String message) =>
+      _addMessage('restoreRouteInformation', message);
+  Stream<String> get onRestoreRouteInformation =>
+      _onTopic('restoreRouteInformation');
+  void parseRouteInformation(String message) =>
+      _addMessage('parseRouteInformation', message);
+  Stream<String> get onParseRouteInformation =>
+      _onTopic('parseRouteInformation');
 }
 
 /// RouterDelegate
 mixin _DebugRouterDelegate on _RouterDebugViewControllerBase {
-  void setNewRoutePath(String message) => _addMessage('setNewRoutePath', message);
+  void setNewRoutePath(String message) =>
+      _addMessage('setNewRoutePath', message);
   Stream<String> get onSetNewRoutePath => _onTopic('setNewRoutePath');
-  void setRestoredRoutePath(String message) => _addMessage('setRestoredRoutePath', message);
+  void setRestoredRoutePath(String message) =>
+      _addMessage('setRestoredRoutePath', message);
   Stream<String> get onSetRestoredRoutePath => _onTopic('setRestoredRoutePath');
-  void setInitialRoutePath(String message) => _addMessage('setInitialRoutePath', message);
+  void setInitialRoutePath(String message) =>
+      _addMessage('setInitialRoutePath', message);
   Stream<String> get onSetInitialRoutePath => _onTopic('setInitialRoutePath');
   void popRoute() => _addMessage('popRoute');
   Stream<String> get onPopRoute => _onTopic('popRoute');
@@ -90,8 +108,11 @@ mixin _DebugRouterDelegate on _RouterDebugViewControllerBase {
   Stream<String> get onBuild => _onTopic('build');
 }
 
-class _IntervalStreamTransformer extends StreamTransformerBase<Message, Message> {
-  const _IntervalStreamTransformer([Duration duration = const Duration(milliseconds: 500)]) : _duration = duration;
+class _IntervalStreamTransformer
+    extends StreamTransformerBase<Message, Message> {
+  const _IntervalStreamTransformer([
+    Duration duration = const Duration(milliseconds: 500),
+  ]) : _duration = duration;
 
   final Duration _duration;
 

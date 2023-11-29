@@ -9,7 +9,8 @@ const String _spThemeKey = 'is_light_theme';
 /// Контроллер текущей темы
 // ignore: prefer_mixin
 class ThemeController with ChangeNotifier {
-  ThemeController() : _isLight = ui.window.platformBrightness != ui.Brightness.dark {
+  ThemeController()
+      : _isLight = ui.window.platformBrightness != ui.Brightness.dark {
     SharedPreferences.getInstance().then<void>(
       (sp) {
         final theme = sp.getBool(_spThemeKey);

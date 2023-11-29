@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
@@ -18,7 +16,8 @@ import 'package:router/src/feature/router_debug_view/widget/router_debug_view_co
 /// [SystemNavigator.selectMultiEntryHistory] method is also called. This
 /// overrides the initialization behavior of
 /// [Navigator.reportsRouteUpdateToEngine].
-class AppRouteInformationProvider extends RouteInformationProvider with WidgetsBindingObserver, ChangeNotifier {
+class AppRouteInformationProvider extends RouteInformationProvider
+    with WidgetsBindingObserver, ChangeNotifier {
   /// Create a platform route information provider.
   ///
   /// Use the [initialRouteInformation] to set the default route information for this
@@ -29,7 +28,9 @@ class AppRouteInformationProvider extends RouteInformationProvider with WidgetsB
 
   static RouteInformation _getDefaultRoute() {
     final route = RouteInformation(
-      location: RouteInformationUtil.normalize(PlatformDispatcher.instance.defaultRouteName),
+      location: RouteInformationUtil.normalize(
+        PlatformDispatcher.instance.defaultRouteName,
+      ),
     );
     l.v6('AppRouteInformationProvider._getDefaultRoute() => ${route.location}');
     return route;
@@ -38,18 +39,20 @@ class AppRouteInformationProvider extends RouteInformationProvider with WidgetsB
   @override
   void routerReportsNewRouteInformation(
     RouteInformation routeInformation, {
-    required RouteInformationReportingType type,
+    RouteInformationReportingType type = RouteInformationReportingType.none,
   }) {
     l.v6(
       'RouteInformationProvider.routerReportsNewRouteInformation(${routeInformation.location}',
     );
-    RouterDebugViewController.instance.routerReportsNewRouteInformation('${routeInformation.location}');
+    RouterDebugViewController.instance
+        .routerReportsNewRouteInformation(routeInformation.location);
     final replace = type == RouteInformationReportingType.neglect ||
-        (type == RouteInformationReportingType.none && _valueInEngine.location == routeInformation.location);
+        (type == RouteInformationReportingType.none &&
+            _valueInEngine.location == routeInformation.location);
     //SystemNavigator.selectMultiEntryHistory();
     SystemNavigator.selectSingleEntryHistory();
     SystemNavigator.routeInformationUpdated(
-      location: routeInformation.location!,
+      location: routeInformation.location,
       state: routeInformation.state,
       replace: replace,
     );
@@ -61,11 +64,14 @@ class AppRouteInformationProvider extends RouteInformationProvider with WidgetsB
   RouteInformation get value => _value;
   RouteInformation _value;
 
-  RouteInformation _valueInEngine = RouteInformation(location: WidgetsBinding.instance!.window.defaultRouteName);
+  RouteInformation _valueInEngine = RouteInformation(
+    location: WidgetsBinding.instance.window.defaultRouteName,
+  );
 
   void _platformReportsNewRouteInformation(RouteInformation routeInformation) {
     // Если роут не изменился - игнорируем
-    if (_value.location == routeInformation.location && _value.state == routeInformation.state) return;
+    if (_value.location == routeInformation.location &&
+        _value.state == routeInformation.state) return;
     l.v6(
       'RouteInformationProvider._platformReportsNewRouteInformation(${_value.location} => ${routeInformation.location})',
     );
@@ -76,14 +82,14 @@ class AppRouteInformationProvider extends RouteInformationProvider with WidgetsB
 
   @override
   void addListener(VoidCallback listener) {
-    if (!hasListeners) WidgetsBinding.instance!.addObserver(this);
+    if (!hasListeners) WidgetsBinding.instance.addObserver(this);
     super.addListener(listener);
   }
 
   @override
   void removeListener(VoidCallback listener) {
     super.removeListener(listener);
-    if (!hasListeners) WidgetsBinding.instance!.removeObserver(this);
+    if (!hasListeners) WidgetsBinding.instance.removeObserver(this);
   }
 
   @override
@@ -92,17 +98,25 @@ class AppRouteInformationProvider extends RouteInformationProvider with WidgetsB
     // will be added and removed in a coherent fashion such that when the object
     // is no longer being used, there's no listener, and so it will get garbage
     // collected.
-    if (hasListeners) WidgetsBinding.instance!.removeObserver(this);
+    if (hasListeners) WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
 
   @override
-  Future<bool> didPushRouteInformation(RouteInformation routeInformation) async {
+  Future<bool> didPushRouteInformation(
+    RouteInformation routeInformation,
+  ) async {
     /// Платформа присылает сообщения которые надо бы обрезать
-    l.v6('RouteInformationProvider.didPushRouteInformation(${routeInformation.location})');
-    RouterDebugViewController.instance.didPushRouteInformation('${routeInformation.location}');
+    l.v6(
+      'RouteInformationProvider.didPushRouteInformation(${routeInformation.location})',
+    );
+    RouterDebugViewController.instance
+        .didPushRouteInformation(routeInformation.location);
 
-    assert(hasListeners, 'RouteInformationProvider должен обладать подписчиками');
+    assert(
+      hasListeners,
+      'RouteInformationProvider должен обладать подписчиками',
+    );
 
     /// TODO: платформа вызывает didPushRouteInformation() вместо didPopRoute() на стрелочку назад
     /// и присылает не тот роут, на который надо перейти, а тот что обрезать
@@ -123,7 +137,10 @@ class AppRouteInformationProvider extends RouteInformationProvider with WidgetsB
   Future<bool> didPushRoute(String route) async {
     l.v6('RouteInformationProvider.didPushRoute($route)');
     RouterDebugViewController.instance.didPushRoute(route);
-    assert(hasListeners, 'RouteInformationProvider должен обладать подписчиками');
+    assert(
+      hasListeners,
+      'RouteInformationProvider должен обладать подписчиками',
+    );
     _platformReportsNewRouteInformation(RouteInformation(location: route));
     return true;
   }

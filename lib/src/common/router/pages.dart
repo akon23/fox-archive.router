@@ -40,7 +40,9 @@ abstract class AppPage<T extends Object?> extends Page<T> {
     final name = segments.firstOrNull?.trim();
     final args = segments.length > 1 ? segments.sublist(1) : <String>[];
     assert(
-      name != null && name.isNotEmpty && name.codeUnits.every((e) => e > 96 && e < 123),
+      name != null &&
+          name.isNotEmpty &&
+          name.codeUnits.every((e) => e > 96 && e < 123),
       'Имя должно состоять только из символов латинского алфавита в нижнем регистре: a..z',
     );
     // Тут объявляем все роуты приложения
@@ -165,7 +167,8 @@ class ColorPage extends AppPage<void> {
   final MaterialColor color;
 
   @override
-  Widget build(BuildContext context) => ColorScreen(colorName: colorName, color: color);
+  Widget build(BuildContext context) =>
+      ColorScreen(colorName: colorName, color: color);
 }
 
 /// Выбранный оттенок
@@ -185,11 +188,14 @@ class AccentPage extends AppPage<void> {
   }) =>
       AccentPage._(colorName, accent, color[accent]!);
 
-  factory AccentPage.red(int accent) => AccentPage._('red', accent, Colors.red[accent]!);
+  factory AccentPage.red(int accent) =>
+      AccentPage._('red', accent, Colors.red[accent]!);
 
-  factory AccentPage.green(int accent) => AccentPage._('green', accent, Colors.green[accent]!);
+  factory AccentPage.green(int accent) =>
+      AccentPage._('green', accent, Colors.green[accent]!);
 
-  factory AccentPage.blue(int accent) => AccentPage._('blue', accent, Colors.blue[accent]!);
+  factory AccentPage.blue(int accent) =>
+      AccentPage._('blue', accent, Colors.blue[accent]!);
 
   static AppPage<void> fromArgs(final List<String> args) {
     try {

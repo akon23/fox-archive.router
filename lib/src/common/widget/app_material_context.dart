@@ -17,9 +17,12 @@ class AppMaterialContext extends StatefulWidget {
 }
 
 class _AppMaterialContextState extends State<AppMaterialContext> {
-  final RouteInformationParser<IRouteConfiguration> _routeInformationParser = const AppRouteInformationParser();
-  final RouteInformationProvider _routeInformationProvider = AppRouteInformationProvider();
-  final RouterDelegate<IRouteConfiguration> _routerDelegate = AppRouterDelegate();
+  final RouteInformationParser<IRouteConfiguration> _routeInformationParser =
+      const AppRouteInformationParser();
+  final RouteInformationProvider _routeInformationProvider =
+      AppRouteInformationProvider();
+  final RouterDelegate<IRouteConfiguration> _routerDelegate =
+      AppRouterDelegate();
   final BackButtonDispatcher _backButtonDispatcher = AppBackButtonDispatcher();
   final ThemeController _themeController = ThemeController();
 
@@ -29,7 +32,8 @@ class _AppMaterialContextState extends State<AppMaterialContext> {
         child: Builder(
           builder: (context) => MaterialApp.router(
             debugShowCheckedModeBanner: false,
-            theme: InheritedThemeNotifier.maybeOf(context)?.theme ?? ThemeData.light(),
+            theme: InheritedThemeNotifier.maybeOf(context)?.theme ??
+                ThemeData.light(),
             onGenerateTitle: (final context) => 'Routing',
             restorationScopeId: 'router',
             routerDelegate: _routerDelegate,

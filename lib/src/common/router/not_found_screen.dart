@@ -5,7 +5,9 @@ import 'package:router/src/common/router/router.dart';
 class NotFoundScreen extends StatelessWidget {
   const NotFoundScreen({Key? key}) : super(key: key);
 
-  void pop(BuildContext context) => AppRouter.canPop(context) ? AppRouter.maybePop(context) : AppRouter.goHome(context);
+  void pop(BuildContext context) => AppRouter.canPop(context)
+      ? AppRouter.maybePop(context)
+      : AppRouter.goHome(context);
 
   @override
   Widget build(BuildContext context) => Scaffold(

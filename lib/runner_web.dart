@@ -32,7 +32,7 @@ void run() =>
         },
         (final error, final stackTrace) {
           l.e(
-            'web_top_level_error: ${error.toString()}',
+            'web_top_level_error: $error',
             stackTrace,
           );
         },

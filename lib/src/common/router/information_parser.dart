@@ -12,7 +12,8 @@ import 'package:router/src/feature/router_debug_view/widget/router_debug_view_co
 class AppRouteInformationParser = RouteInformationParser<IRouteConfiguration>
     with _RestoreRouteInformationMixin, _ParseRouteInformationMixin;
 
-mixin _RestoreRouteInformationMixin on RouteInformationParser<IRouteConfiguration> {
+mixin _RestoreRouteInformationMixin
+    on RouteInformationParser<IRouteConfiguration> {
   @override
   RouteInformation? restoreRouteInformation(IRouteConfiguration configuration) {
     try {
@@ -37,12 +38,18 @@ mixin _RestoreRouteInformationMixin on RouteInformationParser<IRouteConfiguratio
   }
 }
 
-mixin _ParseRouteInformationMixin on RouteInformationParser<IRouteConfiguration> {
+mixin _ParseRouteInformationMixin
+    on RouteInformationParser<IRouteConfiguration> {
   @override
-  Future<IRouteConfiguration> parseRouteInformation(RouteInformation routeInformation) {
+  Future<IRouteConfiguration> parseRouteInformation(
+    RouteInformation routeInformation,
+  ) {
     try {
-      if (routeInformation is IRouteConfiguration) return SynchronousFuture<IRouteConfiguration>(routeInformation);
-      final location = RouteInformationUtil.normalize(routeInformation.location);
+      if (routeInformation is IRouteConfiguration) {
+        return SynchronousFuture<IRouteConfiguration>(routeInformation);
+      }
+      final location =
+          RouteInformationUtil.normalize(routeInformation.location);
       l.v6('RouteInformationParser.parseRouteInformation($location)');
       RouterDebugViewController.instance.parseRouteInformation(location);
       var state = routeInformation.state;
@@ -53,7 +60,9 @@ mixin _ParseRouteInformationMixin on RouteInformationParser<IRouteConfiguration>
       return SynchronousFuture<IRouteConfiguration>(configuration);
     } on Object catch (error) {
       l.e('Ошибка навигации parseRouteInformation: $error');
-      return SynchronousFuture<IRouteConfiguration>(const NotFoundRouteConfiguration());
+      return SynchronousFuture<IRouteConfiguration>(
+        const NotFoundRouteConfiguration(),
+      );
     }
   }
 }

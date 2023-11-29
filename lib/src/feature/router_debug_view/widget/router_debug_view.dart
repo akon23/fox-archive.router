@@ -59,11 +59,13 @@ class _RouterDebugViewLayout extends StatelessWidget {
               children: <Widget>[
                 DebugStatusRectangle(
                   title: 'routerReportsNewRouteInformation()',
-                  stream: RouterDebugViewController.instance.onRouterReportsNewRouteInformation,
+                  stream: RouterDebugViewController
+                      .instance.onRouterReportsNewRouteInformation,
                 ),
                 DebugStatusRectangle(
                   title: 'didPushRouteInformation()',
-                  stream: RouterDebugViewController.instance.onDidPushRouteInformation,
+                  stream: RouterDebugViewController
+                      .instance.onDidPushRouteInformation,
                 ),
                 DebugStatusRectangle(
                   title: 'didPushRoute()',
@@ -85,11 +87,13 @@ class _RouterDebugViewLayout extends StatelessWidget {
               children: <Widget>[
                 DebugStatusRectangle(
                   title: 'restoreRouteInformation()',
-                  stream: RouterDebugViewController.instance.onRestoreRouteInformation,
+                  stream: RouterDebugViewController
+                      .instance.onRestoreRouteInformation,
                 ),
                 DebugStatusRectangle(
                   title: 'parseRouteInformation()',
-                  stream: RouterDebugViewController.instance.onParseRouteInformation,
+                  stream: RouterDebugViewController
+                      .instance.onParseRouteInformation,
                 ),
               ],
             ),
@@ -107,11 +111,13 @@ class _RouterDebugViewLayout extends StatelessWidget {
                 ),
                 DebugStatusRectangle(
                   title: 'setRestoredRoutePath()',
-                  stream: RouterDebugViewController.instance.onSetRestoredRoutePath,
+                  stream:
+                      RouterDebugViewController.instance.onSetRestoredRoutePath,
                 ),
                 DebugStatusRectangle(
                   title: 'setInitialRoutePath()',
-                  stream: RouterDebugViewController.instance.onSetInitialRoutePath,
+                  stream:
+                      RouterDebugViewController.instance.onSetInitialRoutePath,
                 ),
                 DebugStatusRectangle(
                   title: 'popRoute()',
@@ -143,7 +149,7 @@ class _RouterDebugViewLayout extends StatelessWidget {
 @immutable
 class _RouterDebugViewRow extends StatelessWidget {
   const _RouterDebugViewRow({
-    required final this.children,
+    required this.children,
     Key? key,
   }) : super(key: key);
 

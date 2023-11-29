@@ -5,7 +5,9 @@ import 'package:l/l.dart';
 import 'package:meta/meta.dart';
 import 'package:router/src/common/router/router_delegate.dart';
 
-typedef NavigateCallback = IRouteConfiguration Function(IRouteConfiguration configuration);
+typedef NavigateCallback = IRouteConfiguration Function(
+  IRouteConfiguration configuration,
+);
 
 /// Скоуп для управления роутингом и навигацией приложения
 @immutable
@@ -33,35 +35,41 @@ class AppRouter extends InheritedNotifier {
     if (listen) {
       appRouter = context.dependOnInheritedWidgetOfExactType<AppRouter>();
     } else {
-      final inhW = context.getElementForInheritedWidgetOfExactType<AppRouter>()?.widget;
+      final inhW =
+          context.getElementForInheritedWidgetOfExactType<AppRouter>()?.widget;
       appRouter = inhW is AppRouter ? inhW : null;
     }
     return appRouter ?? _notInScope();
   }
 
-  @alwaysThrows
-  static Never _notInScope() => throw UnsupportedError('Not in AppRouter scope');
+  static Never _notInScope() =>
+      throw UnsupportedError('Not in AppRouter scope');
 
   /// Получить навигатор из контекста
   /// См также [NavigatorState]
-  static NavigatorState? navigatorOf(BuildContext context) => of(context, listen: false).navigator;
+  static NavigatorState? navigatorOf(BuildContext context) =>
+      of(context, listen: false).navigator;
 
   /// Получить роутер из контекста
   /// См также [RouterDelegate]
-  static AppRouterDelegate routerOf(BuildContext context) => of(context, listen: false).router;
+  static AppRouterDelegate routerOf(BuildContext context) =>
+      of(context, listen: false).router;
 
   /// Получить обозреватель страниц из контекста
   /// См также [RouteObserver], [NavigatorObserver]
-  static PageObserver pageObserverOf(BuildContext context) => of(context, listen: false).router.pageObserver;
+  static PageObserver pageObserverOf(BuildContext context) =>
+      of(context, listen: false).router.pageObserver;
 
   /// Получить обозреватель страниц из контекста
   /// См также [RouteObserver], [NavigatorObserver], [RouteAware]
-  static ModalObserver modalObserverOf(BuildContext context) => of(context, listen: false).router.modalObserver;
+  static ModalObserver modalObserverOf(BuildContext context) =>
+      of(context, listen: false).router.modalObserver;
 
   /// Можно ли закрыть текущий роут
   /// См также [Navigator.canPop], [ModalRoute.canPop]
-  static bool canPop(BuildContext context, {bool listen = false}) =>
-      listen ? (ModalRoute.of(context)?.canPop ?? false) : (navigatorOf(context)?.canPop() ?? false);
+  static bool canPop(BuildContext context, {bool listen = false}) => listen
+      ? (ModalRoute.of(context)?.canPop ?? false)
+      : (navigatorOf(context)?.canPop() ?? false);
 
   /// Попробывать закрыть текущий роут
   /// См также [Navigator.maybePop]
@@ -70,7 +78,8 @@ class AppRouter extends InheritedNotifier {
     T? result,
   ]) {
     l.i('Попробуем вернуться к предидущему роуту');
-    return navigatorOf(context)?.maybePop<T>(result) ?? Future<bool>.value(false);
+    return navigatorOf(context)?.maybePop<T>(result) ??
+        Future<bool>.value(false);
   }
 
   /// Обновить конфигурацию роутера и перейти на новую страницу
@@ -129,10 +138,12 @@ class AppRouter extends InheritedNotifier {
       );
 
   /// Получить текущие аргументы роута
-  static Object? routeArguments(BuildContext context) => ModalRoute.of(context)?.settings.arguments;
+  static Object? routeArguments(BuildContext context) =>
+      ModalRoute.of(context)?.settings.arguments;
 
   /// Содержится ли [AppRouter] в переданном контексте
-  static bool containedIn(BuildContext context) => context.getElementForInheritedWidgetOfExactType<AppRouter>() != null;
+  static bool containedIn(BuildContext context) =>
+      context.getElementForInheritedWidgetOfExactType<AppRouter>() != null;
 
   /// Добавить в навигатор анонимный экран.
   /// ВНИМАНИЕ! Для основных экранов стоит отдать предпочтение [navigate]

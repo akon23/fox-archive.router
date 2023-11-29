@@ -6,9 +6,9 @@ import 'package:router/src/common/router/router.dart';
 @immutable
 class AccentScreen extends StatelessWidget {
   const AccentScreen({
-    required final this.colorName,
-    required final this.accent,
-    required final this.color,
+    required this.colorName,
+    required this.accent,
+    required this.color,
     Key? key,
   }) : super(key: key);
 
@@ -31,7 +31,8 @@ class AccentScreen extends StatelessWidget {
               shrinkWrap: true,
               physics: const ClampingScrollPhysics(),
               padding: EdgeInsets.symmetric(
-                horizontal: math.max((MediaQuery.of(context).size.width - 550) / 2, 8),
+                horizontal:
+                    math.max((MediaQuery.of(context).size.width - 550) / 2, 8),
                 vertical: 14,
               ),
               children: <Widget>[

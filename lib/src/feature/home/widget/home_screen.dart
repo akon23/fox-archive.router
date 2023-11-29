@@ -16,12 +16,18 @@ class HomeScreen extends StatelessWidget {
           actions: <Widget>[
             IconButton(
               icon: const Icon(Icons.info),
-              onPressed: () => AppRouter.navigate(context, (configuration) => configuration.add(AboutPage())),
+              onPressed: () => AppRouter.navigate(
+                context,
+                (configuration) => configuration.add(AboutPage()),
+              ),
             ),
             const SizedBox(width: 8),
             IconButton(
               icon: const Icon(Icons.settings),
-              onPressed: () => AppRouter.navigate(context, (configuration) => configuration.add(SettingsPage())),
+              onPressed: () => AppRouter.navigate(
+                context,
+                (configuration) => configuration.add(SettingsPage()),
+              ),
             ),
             const SizedBox(width: 12),
           ],
@@ -32,7 +38,8 @@ class HomeScreen extends StatelessWidget {
               shrinkWrap: true,
               physics: const ClampingScrollPhysics(),
               padding: EdgeInsets.symmetric(
-                horizontal: math.max((MediaQuery.of(context).size.width - 550) / 2, 8),
+                horizontal:
+                    math.max((MediaQuery.of(context).size.width - 550) / 2, 8),
                 vertical: 14,
               ),
               children: <Widget>[
@@ -43,7 +50,10 @@ class HomeScreen extends StatelessWidget {
                       'Select color',
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context).textTheme.headline4!.copyWith(height: 1),
+                      style: Theme.of(context)
+                          .textTheme
+                          .headline4!
+                          .copyWith(height: 1),
                     ),
                   ),
                 ),
@@ -112,9 +122,9 @@ class _ColorsList extends StatelessWidget {
 @immutable
 class _ColorChip extends StatelessWidget {
   const _ColorChip({
-    required final this.title,
-    required final this.color,
-    required final this.onTap,
+    required this.title,
+    required this.color,
+    required this.onTap,
     Key? key,
   }) : super(key: key);
 

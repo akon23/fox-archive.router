@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 @immutable
 class RouterDebugViewSwitch extends InheritedWidget {
   const RouterDebugViewSwitch({
-    required final this.enabled,
+    required this.enabled,
     required final Widget child,
     Key? key,
   }) : super(key: key, child: child);
@@ -12,13 +12,19 @@ class RouterDebugViewSwitch extends InheritedWidget {
 
   static bool of(BuildContext context, {bool listen = true}) {
     if (listen) {
-      return context.dependOnInheritedWidgetOfExactType<RouterDebugViewSwitch>()?.enabled ?? false;
+      return context
+              .dependOnInheritedWidgetOfExactType<RouterDebugViewSwitch>()
+              ?.enabled ??
+          false;
     } else {
-      final inhW = context.getElementForInheritedWidgetOfExactType<RouterDebugViewSwitch>()?.widget;
+      final inhW = context
+          .getElementForInheritedWidgetOfExactType<RouterDebugViewSwitch>()
+          ?.widget;
       return inhW is RouterDebugViewSwitch && inhW.enabled;
     }
   }
 
   @override
-  bool updateShouldNotify(RouterDebugViewSwitch oldWidget) => enabled != oldWidget.enabled;
+  bool updateShouldNotify(RouterDebugViewSwitch oldWidget) =>
+      enabled != oldWidget.enabled;
 }

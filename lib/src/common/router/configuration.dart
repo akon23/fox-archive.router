@@ -41,14 +41,18 @@ abstract class RouteConfigurationBase implements IRouteConfiguration {
   @override
   IRouteConfiguration? get previous {
     IRouteConfiguration? getPrevious() {
-      if (location == '/' || location == 'home' || location.isEmpty) return null;
+      if (location == '/' || location == 'home' || location.isEmpty) {
+        return null;
+      }
+
       try {
         final uri = Uri.parse(location);
         final pathSegments = uri.pathSegments;
         if (pathSegments.length == 1) {
           return const HomeRouteConfiguration();
         }
-        final newLocation = pathSegments.sublist(0, pathSegments.length - 1).join('/');
+        final newLocation =
+            pathSegments.sublist(0, pathSegments.length - 1).join('/');
         final newState = state;
         if (newState != null) {
           newState.remove(pathSegments.last);
@@ -71,7 +75,10 @@ abstract class RouteConfigurationBase implements IRouteConfiguration {
   IRouteConfiguration add(AppPage page) {
     if (page.location.isEmpty) return this;
     final arguments = page.arguments;
-    final newLocation = RouteInformationUtil.normalize('$location/${page.location}');
+
+    final newLocation =
+        RouteInformationUtil.normalize('$location/${page.location}');
+
     if (arguments is Map<String, Object?> || state != null) {
       return DynamicRouteConfiguration(
         newLocation,
@@ -116,6 +123,9 @@ class HomeRouteConfiguration extends RouteConfigurationBase {
 
   @override
   Map<String, Object?>? get state => <String, Object?>{};
+
+  @override
+  Uri get uri => Uri(path: location);
 }
 
 /// Конфигурация описывающая отсутсвующий контент
@@ -133,6 +143,9 @@ class NotFoundRouteConfiguration extends RouteConfigurationBase {
 
   @override
   Map<String, Object?>? get state => <String, Object?>{};
+
+  @override
+  Uri get uri => Uri(path: location);
 }
 
 /// Динамическая конфигурация, получаемая путем преобразования заданных презетов
@@ -145,4 +158,7 @@ class DynamicRouteConfiguration extends RouteConfigurationBase {
 
   @override
   final Map<String, Object?>? state;
+
+  @override
+  Uri get uri => Uri(path: location);
 }

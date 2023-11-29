@@ -15,9 +15,13 @@ class InheritedThemeNotifier extends InheritedNotifier<ThemeController> {
 
   static ThemeController? maybeOf(BuildContext context, {bool listen = true}) {
     if (listen) {
-      return context.dependOnInheritedWidgetOfExactType<InheritedThemeNotifier>()?.notifier;
+      return context
+          .dependOnInheritedWidgetOfExactType<InheritedThemeNotifier>()
+          ?.notifier;
     } else {
-      final inhW = context.getElementForInheritedWidgetOfExactType<InheritedThemeNotifier>()?.widget;
+      final inhW = context
+          .getElementForInheritedWidgetOfExactType<InheritedThemeNotifier>()
+          ?.widget;
       return inhW is InheritedThemeNotifier ? inhW.notifier : null;
     }
   }

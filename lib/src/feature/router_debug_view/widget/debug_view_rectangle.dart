@@ -18,7 +18,9 @@ class DebugComponentContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) => DecoratedBox(
         decoration: BoxDecoration(
-          color: _children.isEmpty ? Colors.lightGreenAccent : Colors.lightBlueAccent,
+          color: _children.isEmpty
+              ? Colors.lightGreenAccent
+              : Colors.lightBlueAccent,
           borderRadius: BorderRadius.circular(8),
           border: Border.all(
             width: 1,
@@ -80,7 +82,8 @@ class DebugStatusRectangle extends StatefulWidget {
   State<DebugStatusRectangle> createState() => _DebugStatusRectangleState();
 }
 
-class _DebugStatusRectangleState extends State<DebugStatusRectangle> with SingleTickerProviderStateMixin {
+class _DebugStatusRectangleState extends State<DebugStatusRectangle>
+    with SingleTickerProviderStateMixin {
   static final Animatable<Color?> _background = TweenSequence<Color?>(
     <TweenSequenceItem<Color?>>[
       TweenSequenceItem<Color?>(

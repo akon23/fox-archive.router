@@ -21,7 +21,8 @@ export 'package:router/src/common/router/router.dart';
 
 // ignore_for_file: prefer_mixin, avoid_types_on_closure_parameters
 
-class AppRouterDelegate extends RouterDelegate<IRouteConfiguration> with ChangeNotifier {
+class AppRouterDelegate extends RouterDelegate<IRouteConfiguration>
+    with ChangeNotifier {
   AppRouterDelegate()
       : pageObserver = PageObserver(),
         modalObserver = ModalObserver();
@@ -56,7 +57,8 @@ class AppRouterDelegate extends RouterDelegate<IRouteConfiguration> with ChangeN
             final padding = size.width < 400 ? 0.0 : 12.0;
             final width = size.width - padding * 2;
             final height = math.min<double>(400, width / 3);
-            final showDebugView = width > 350 && height > 100 && size.height / 2 > height;
+            final showDebugView =
+                width > 350 && height > 100 && size.height / 2 > height;
             return Column(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.start,
@@ -65,7 +67,8 @@ class AppRouterDelegate extends RouterDelegate<IRouteConfiguration> with ChangeN
                 Expanded(
                   key: const ValueKey<String>('NavigatorPane'),
                   child: Navigator(
-                    transitionDelegate: const DefaultTransitionDelegate<Object?>(),
+                    transitionDelegate:
+                        const DefaultTransitionDelegate<Object?>(),
                     onUnknownRoute: _onUnknownRoute,
                     reportsRouteUpdateToEngine: true,
                     observers: <NavigatorObserver>[
@@ -75,14 +78,19 @@ class AppRouterDelegate extends RouterDelegate<IRouteConfiguration> with ChangeN
                     ],
                     pages: pages,
                     onPopPage: (Route<Object?> route, Object? result) {
-                      l.v6('Navigator.onPopPage(${route.settings.name}, ${result?.toString() ?? '<null>'})');
+                      l.v6(
+                        'Navigator.onPopPage(${route.settings.name}, ${result?.toString() ?? '<null>'})',
+                      );
                       RouterDebugViewController.instance.popPage(
                         '${route.settings.name}, ${result?.toString() ?? '<null>'}',
                       );
                       if (!route.didPop(result)) {
                         return false;
                       }
-                      setNewRoutePath(configuration.previous ?? const NotFoundRouteConfiguration());
+                      setNewRoutePath(
+                        configuration.previous ??
+                            const NotFoundRouteConfiguration(),
+                      );
                       return true;
                     },
                   ),
@@ -170,18 +178,21 @@ class AppRouterDelegate extends RouterDelegate<IRouteConfiguration> with ChangeN
   @override
   Future<void> setRestoredRoutePath(IRouteConfiguration configuration) {
     l.v6('RouterDelegate.setRestoredRoutePath(${configuration.location})');
-    RouterDebugViewController.instance.setRestoredRoutePath(configuration.location);
+    RouterDebugViewController.instance
+        .setRestoredRoutePath(configuration.location);
     return super.setRestoredRoutePath(configuration);
   }
 
   @override
   Future<void> setInitialRoutePath(IRouteConfiguration configuration) {
     l.v6('RouterDelegate.setInitialRoutePath(${configuration.location})');
-    RouterDebugViewController.instance.setInitialRoutePath(configuration.location);
+    RouterDebugViewController.instance
+        .setInitialRoutePath(configuration.location);
     return super.setInitialRoutePath(configuration);
   }
 
-  Route<void> _onUnknownRoute(RouteSettings settings) => MaterialPageRoute<void>(
+  Route<void> _onUnknownRoute(RouteSettings settings) =>
+      MaterialPageRoute<void>(
         settings: settings,
         builder: (context) => const NotFoundScreen(),
       );

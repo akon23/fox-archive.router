@@ -11,9 +11,9 @@ import 'package:router/src/common/router/pages.dart';
 class PagesBuilder extends StatefulWidget {
   /// {@macro pages_builder.PagesBuilder}
   const PagesBuilder({
-    required final this.configuration,
-    required final this.builder,
-    final this.child,
+    required this.configuration,
+    required this.builder,
+    this.child,
     Key? key,
   }) : super(key: key);
 
@@ -48,9 +48,14 @@ class PagesBuilder extends StatefulWidget {
         l.w('Ошибка разбора роута "$path": $err');
       }
     }
-    l.v6('PagesBuilder.buildAndReduce(ctx, $configuration) => [${pages.keys.join(',')}]');
+    l.v6(
+      'PagesBuilder.buildAndReduce(ctx, $configuration) => [${pages.keys.join(',')}]',
+    );
     assert(pages.values.isNotEmpty, 'Список роутов не может быть пустым');
-    assert(pages.values.first is HomePage, 'Первым роутом всегда должен быть домашний роут');
+    assert(
+      pages.values.first is HomePage,
+      'Первым роутом всегда должен быть домашний роут',
+    );
     return pages.values.toList(growable: false);
   }
 
@@ -81,6 +86,7 @@ class _PagesBuilderState extends State<PagesBuilder> {
     configuration = widget.configuration;
     pages = PagesBuilder.buildAndReduce(context, widget.configuration);
   }
+
   //endregion
 
   @override

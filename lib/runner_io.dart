@@ -14,7 +14,7 @@ void run() =>
         },
         (final error, final stackTrace) {
           l.e(
-            'io_top_level_error: ${error.toString()}',
+            'io_top_level_error: $error',
             stackTrace,
           );
         },

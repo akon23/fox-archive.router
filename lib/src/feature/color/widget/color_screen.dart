@@ -8,8 +8,8 @@ import 'package:router/src/common/router/router.dart';
 @immutable
 class ColorScreen extends StatelessWidget {
   const ColorScreen({
-    required final this.colorName,
-    required final this.color,
+    required this.colorName,
+    required this.color,
     Key? key,
   }) : super(key: key);
 
@@ -31,7 +31,8 @@ class ColorScreen extends StatelessWidget {
               shrinkWrap: true,
               physics: const ClampingScrollPhysics(),
               padding: EdgeInsets.symmetric(
-                horizontal: math.max((MediaQuery.of(context).size.width - 550) / 2, 8),
+                horizontal:
+                    math.max((MediaQuery.of(context).size.width - 550) / 2, 8),
                 vertical: 14,
               ),
               children: <Widget>[
@@ -42,7 +43,10 @@ class ColorScreen extends StatelessWidget {
                       'Selected color: $colorName',
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context).textTheme.headline6!.copyWith(height: 1),
+                      style: Theme.of(context)
+                          .textTheme
+                          .headline6!
+                          .copyWith(height: 1),
                     ),
                   ),
                 ),
@@ -58,7 +62,10 @@ class ColorScreen extends StatelessWidget {
                       'Select accent',
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context).textTheme.headline6!.copyWith(height: 1),
+                      style: Theme.of(context)
+                          .textTheme
+                          .headline6!
+                          .copyWith(height: 1),
                     ),
                   ),
                 ),
@@ -152,8 +159,8 @@ class _AccentContainer extends StatelessWidget {
 
 class _AccentList extends StatefulWidget {
   const _AccentList({
-    required final this.colorName,
-    required final this.color,
+    required this.colorName,
+    required this.color,
     Key? key,
   }) : super(key: key);
 
@@ -212,9 +219,9 @@ class _AccentListScrollBehavior extends MaterialScrollBehavior {
 @immutable
 class _AccentChip extends StatelessWidget {
   const _AccentChip({
-    required final this.colorName,
-    required final this.color,
-    required final this.accent,
+    required this.colorName,
+    required this.color,
+    required this.accent,
     Key? key,
   }) : super(key: key);
 
